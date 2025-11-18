@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ClearYourMind</string>
+    <string name="mood_display_format">Ánimo: %1$d/10</string>
+</resources>
