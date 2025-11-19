@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mi Rutina Semanal"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"
+            android:textColor="#333333"/>
+
+        <!-- ================= MODO EDICIÓN (Inputs) ================= -->
+        <LinearLayout
+            android:id="@+id/editContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView android:text="Lunes" style="@style/DayHeaderStyle"/>
+            <EditText android:id="@+id/etMonday" style="@style/DayInputStyle" android:hint="..."/>
+
+            <TextView android:text="Martes" style="@style/DayHeaderStyle"/>
+            <EditText android:id="@+id/etTuesday" style="@style/DayInputStyle" android:hint="..."/>
+
+            <TextView android:text="Miércoles" style="@style/DayHeaderStyle"/>
+            <EditText android:id="@+id/etWednesday" style="@style/DayInputStyle" android:hint="..."/>
+
+            <TextView android:text="Jueves" style="@style/DayHeaderStyle"/>
+            <EditText android:id="@+id/etThursday" style="@style/DayInputStyle" android:hint="..."/>
+
+            <TextView android:text="Viernes" style="@style/DayHeaderStyle"/>
+            <EditText android:id="@+id/etFriday" style="@style/DayInputStyle" android:hint="..."/>
+
+            <Button
+                android:id="@+id/btnSaveRoutine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar y Ver Tabla"
+                android:layout_marginTop="24dp"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- ================= MODO VISTA (Tabla) ================= -->
+        <LinearLayout
+            android:id="@+id/tableContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:contentPadding="8dp"
+                android:backgroundTint="@android:color/white">
+
+                <TableLayout
+                    android:id="@+id/routineTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="1">
+
+                    <!-- Cabecera -->
+                    <TableRow android:background="#EEEEEE" android:padding="8dp">
+                        <TextView android:text="Día" android:textStyle="bold" android:paddingEnd="16dp"/>
+                        <TextView android:text="Actividad" android:textStyle="bold"/>
+                    </TableRow>
+
+                    <!-- Filas -->
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Lunes" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tvMondayResult" android:textColor="#555"/>
+                    </TableRow>
+                    <View android:layout_height="1dp" android:background="#E0E0E0"/>
+
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Martes" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tvTuesdayResult" android:textColor="#555"/>
+                    </TableRow>
+                    <View android:layout_height="1dp" android:background="#E0E0E0"/>
+
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Miércoles" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tvWednesdayResult" android:textColor="#555"/>
+                    </TableRow>
+                    <View android:layout_height="1dp" android:background="#E0E0E0"/>
+
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Jueves" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tvThursdayResult" android:textColor="#555"/>
+                    </TableRow>
+                    <View android:layout_height="1dp" android:background="#E0E0E0"/>
+
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Viernes" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tvFridayResult" android:textColor="#555"/>
+                    </TableRow>
+
+                </TableLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/btnEditRoutine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Editar Rutina"
+                android:layout_marginTop="24dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        </LinearLayout>
+
+        <!-- Botón para volver al menú principal -->
+        <Button
+            android:id="@+id/btnBackMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver al Menú Principal"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#757575"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textColor="#333333"/>
+
+    </LinearLayout>
+</ScrollView>

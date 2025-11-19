@@ -19,15 +19,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClearYourMind">
+
+        <!-- LoginActivity es ahora la pantalla de inicio -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- MainActivity es una pantalla secundaria -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.RoutineActivity"
+            android:exported="false" />
+
+        <!-- Perfil de Usuario -->
+        <activity
+            android:name=".ui.ProfileActivity"
+            android:exported="false" />
+
+        <!-- Pantalla de Registro -->
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

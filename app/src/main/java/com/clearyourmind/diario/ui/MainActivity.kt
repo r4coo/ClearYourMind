@@ -99,6 +99,16 @@ class MainActivity : AppCompatActivity() {
             saveDailyEntry()
         }
 
+        // Listener para el botón de Rutina
+        binding.routineButton.setOnClickListener {
+            startActivity(Intent(this, RoutineActivity::class.java))
+        }
+
+        // Listener para el botón de Perfil
+        binding.profileButton.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
         binding.cameraButton.setOnClickListener { checkCameraPermissions() }
         binding.locationButton.setOnClickListener { checkLocationPermissions() }
     }
