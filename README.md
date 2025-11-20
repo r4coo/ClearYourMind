@@ -56,7 +56,7 @@ El proyecto está construido utilizando las mejores prácticas modernas de desar
 - **Diseño de UI:** XML Layouts con Material Design Components.
 ---
 
-##🔐 Permisos Requeridos
+## 🔐 Permisos Requeridos
 
 La aplicación solicita los siguientes permisos al usuario para funcionar al 100%:
 
@@ -64,7 +64,7 @@ La aplicación solicita los siguientes permisos al usuario para funcionar al 100
 - **ACCESS_FINE_LOCATION y ACCESS_COARSE_LOCATION:** Necesarios para geoetiquetar las entradas del diario.
 - **READ/WRITE_EXTERNAL_STORAGE:** (Dependiendo de la versión de Android) Para gestionar el guardado de fotos.
 
-##📂 Estructura del Proyecto
+## 📂 Estructura del Proyecto
 
 com.clearyourmind.diario
 - ├── data/                 #Capa de Datos
