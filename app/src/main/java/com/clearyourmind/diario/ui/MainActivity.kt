@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -22,9 +23,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.clearyourmind.diario.R
 import com.clearyourmind.diario.data.AppDatabase
 import com.clearyourmind.diario.data.MoodEntry
+import com.clearyourmind.diario.data.api.Quote
+import com.clearyourmind.diario.data.api.RetrofitClient
 import com.clearyourmind.diario.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -42,10 +48,12 @@ class MainActivity : AppCompatActivity() {
 
     private var currentPhotoPath: String? = null
 
+    // Launcher para permisos generales (Cámara y Ubicación)
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         when {
             permissions[Manifest.permission.CAMERA] == true -> dispatchTakePictureIntent()
             permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true || permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true -> requestLocation()
+            permissions[Manifest.permission.CALL_PHONE] == true -> makeEmergencyCall()
             else -> Toast.makeText(this, "Permisos necesarios denegados.", Toast.LENGTH_SHORT).show()
         }
     }
@@ -99,18 +107,29 @@ class MainActivity : AppCompatActivity() {
             saveDailyEntry()
         }
 
-        // Listener para el botón de Rutina
         binding.routineButton.setOnClickListener {
             startActivity(Intent(this, RoutineActivity::class.java))
         }
 
-        // Listener para el botón de Perfil
         binding.profileButton.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
 
         binding.cameraButton.setOnClickListener { checkCameraPermissions() }
         binding.locationButton.setOnClickListener { checkLocationPermissions() }
+
+        // --- NUEVOS BOTONES ---
+        binding.btnPanic.setOnClickListener {
+            checkCallPermission()
+        }
+
+        binding.btnAdvice.setOnClickListener {
+            fetchDailyAdvice()
+        }
+
+        binding.btnPsychologist.setOnClickListener {
+            showPsychologistContact()
+        }
     }
 
     private fun setupObservers() {
@@ -132,6 +151,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // --- Permisos y Acciones Existentes ---
     private fun checkCameraPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             dispatchTakePictureIntent()
@@ -147,6 +167,63 @@ class MainActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
         }
     }
+
+    // --- NUEVAS FUNCIONES ---
+
+    private fun checkCallPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            makeEmergencyCall()
+        } else {
+            requestPermissionLauncher.launch(arrayOf(Manifest.permission.CALL_PHONE))
+        }
+    }
+
+    private fun makeEmergencyCall() {
+        val intent = Intent(Intent.ACTION_CALL)
+        intent.data = Uri.parse("tel:133") // Número de emergencia (Chile)
+        try {
+            startActivity(intent)
+        } catch (e: SecurityException) {
+            Toast.makeText(this, "Error al realizar la llamada", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun fetchDailyAdvice() {
+        Toast.makeText(this, "Obteniendo consejo...", Toast.LENGTH_SHORT).show()
+        
+        RetrofitClient.instance.getRandomQuote().enqueue(object : Callback<List<Quote>> {
+            override fun onResponse(call: Call<List<Quote>>, response: Response<List<Quote>>) {
+                if (response.isSuccessful && !response.body().isNullOrEmpty()) {
+                    val quote = response.body()!![0]
+                    showDialog("Consejo del Día", "\"${quote.q}\"\n\n- ${quote.a}")
+                } else {
+                    Toast.makeText(this@MainActivity, "No se pudo obtener el consejo", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Quote>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun showPsychologistContact() {
+        showDialog("Ayuda Psicológica", 
+            "Si necesitas ayuda profesional, puedes contactar a:\n\n" +
+            "🏥 Salud Responde: 600 360 77 77\n" +
+            "🆘 Prevención del Suicidio: *4141\n\n" +
+            "Recuerda que no estás solo/a.")
+    }
+
+    private fun showDialog(title: String, message: String) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Entendido") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    // --- Funciones Auxiliares Existentes ---
 
     @Throws(IOException::class)
     private fun createImageFile(): File {

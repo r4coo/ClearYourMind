@@ -18,8 +18,24 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // --- CONFIGURACIÓN DE FIRMA ---
+    signingConfigs {
+        create("release") {
+            // Usamos projectDir para buscar el archivo en la carpeta 'app'
+            storeFile = File(projectDir, "llave_apk")
+            storePassword = "117403"
+            // CAMBIO IMPORTANTE: Probamos con el alias por defecto 'key0'
+            keyAlias = "key0"
+            keyPassword = "117403"
+        }
+    }
+    // ------------------------------
+
     buildTypes {
         release {
+            // Aplicamos la firma configurada arriba
+            signingConfig = signingConfigs.getByName("release")
+            
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -56,7 +72,16 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.activity:activity-ktx:1.8.2")
 
+    // Red (Retrofit & Gson)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Testing
     testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }

@@ -78,36 +78,81 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"/>
 
-    <!-- Nuevo botón para la Rutina -->
-    <Button
-        android:id="@+id/routineButton"
-        android:layout_width="0dp"
+    <!-- Botones principales -->
+    <LinearLayout
+        android:id="@+id/mainButtonsContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ver Rutina Semanal"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/cameraButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+        android:layout_marginTop="16dp">
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Guardar Entrada"
-        app:layout_constraintTop_toBottomOf="@id/routineButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        <Button
+            android:id="@+id/routineButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver Rutina Semanal"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Entrada"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/entriesRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/saveButton"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainButtonsContainer"
+        app:layout_constraintBottom_toTopOf="@id/bottomButtonsContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- ================= NUEVA BARRA INFERIOR ================= -->
+    <LinearLayout
+        android:id="@+id/bottomButtonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btnPanic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SOS"
+            android:backgroundTint="#D32F2F"
+            android:textColor="#FFF"
+            android:textSize="12sp"
+            android:layout_marginEnd="4dp"/>
+
+        <Button
+            android:id="@+id/btnAdvice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Consejo"
+            android:backgroundTint="#1976D2"
+            android:textColor="#FFF"
+            android:textSize="12sp"
+            android:layout_marginEnd="4dp"/>
+
+        <Button
+            android:id="@+id/btnPsychologist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ayuda"
+            android:backgroundTint="#388E3C"
+            android:textColor="#FFF"
+            android:textSize="12sp"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

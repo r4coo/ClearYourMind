@@ -79,14 +79,15 @@
             android:layout_marginBottom="8dp"
             android:textColor="#333333"/>
 
+        <!-- Botón Microservicio -->
         <Button
             android:id="@+id/btnNotifications"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Notificaciones"
+            android:text="Enviar Sugerencia (Microservicio)"
             android:gravity="start|center_vertical"
-            android:drawableEnd="@android:drawable/ic_popup_reminder"
+            android:drawableEnd="@android:drawable/ic_menu_send"
             android:layout_marginBottom="32dp"
             android:textColor="#333333"/>
 
